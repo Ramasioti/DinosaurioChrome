@@ -5,7 +5,11 @@ using UnityEngine;
 public class Jugador : MonoBehaviour
 {
 
-    private Rigidbody2D rb;  
+    private Rigidbody2D rb;
+
+    public float fuerzaSalto = 0;
+
+    public GameManager gameManager;
 
     bool Salto = false;
 
@@ -18,7 +22,7 @@ public class Jugador : MonoBehaviour
     {
         if (Input.GetKey("space") && Salto == false)
         {
-            rb.velocity = new Vector3(0, 5, 0);
+            rb.velocity = new Vector3(0, fuerzaSalto, 0);
             Salto = true;
         }
 
@@ -26,5 +30,12 @@ public class Jugador : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         Salto = false;
+
+        if (collision.gameObject.CompareTag("Obstaculo"))
+        {
+            gameManager.GameOver();
+        }
     }
+
+    
 }
